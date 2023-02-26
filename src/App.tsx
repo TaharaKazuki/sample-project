@@ -1,7 +1,7 @@
-import { LoginForm } from '@/components/model/LoginForm';
+import { Login } from '@/components/pages/Login';
 
 function App() {
-  return <LoginForm />;
+  return <Login />;
 }
 
 export default App;
