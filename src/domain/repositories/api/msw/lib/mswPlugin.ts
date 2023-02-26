@@ -1,6 +1,6 @@
 import { ZodiosPlugin } from '@zodios/core';
 
-import { startMsw, stopMsw } from '../msw';
+import { startMsw, stopMsw } from '..';
 
 export const mswPlugin: () => ZodiosPlugin = () => ({
   name: 'msw',
