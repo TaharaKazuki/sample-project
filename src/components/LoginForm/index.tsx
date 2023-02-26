@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { FaLock, FaUserAlt } from 'react-icons/fa';
 import {
   Avatar,
@@ -15,13 +14,13 @@ import {
   Stack,
 } from '@chakra-ui/react';
 
+import { useLogin } from '@/feature/login/hooks/useLogin';
+
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 
 export const LoginForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleShowClick = () => setShowPassword(!showPassword);
+  const { showPassword, handleShowClick } = useLogin();
 
   return (
     <Flex
