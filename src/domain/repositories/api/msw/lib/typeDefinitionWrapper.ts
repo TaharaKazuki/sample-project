@@ -6,8 +6,8 @@ import {
 } from '@zodios/core/lib/zodios.types';
 import { ResponseResolver, rest, RestContext, RestRequest } from 'msw';
 
+import { API_ENDPOINT } from '../../../const/url';
 import { apiClient } from '../../client';
-import { API_ENDPOINT } from '../../const/url';
 
 type Api = ReturnType<typeof apiClient>['api'];
 type STATUS_CODE = 400 | 401 | 402 | 403; // TODO 振る舞いの数だけ増やす
