@@ -65,7 +65,7 @@ export const LoginForm = () => {
                 colorScheme="teal"
                 width="full"
               >
-                Login
+                ログイン
               </Button>
             </Stack>
           </form>
