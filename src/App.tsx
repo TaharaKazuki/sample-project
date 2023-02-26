@@ -1,7 +1,11 @@
-import { Login } from '@/components/pages/Login';
+import { useRoutes } from 'react-router-dom';
 
-function App() {
-  return <Login />;
-}
+import { routes } from './routes';
+
+const App = () => {
+  const router = useRoutes(routes);
+
+  return <>{router}</>;
+};
 
 export default App;

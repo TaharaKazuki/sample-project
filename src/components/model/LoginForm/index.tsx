@@ -50,7 +50,7 @@ export const LoginForm = () => {
                   <InputLeftElement pointerEvents="none" color="gray.300">
                     <CFaLock color="gray.300" />
                   </InputLeftElement>
-                  <Input type={showPassword ? 'text' : 'password'} placeholder="Password" />
+                  <Input type={showPassword ? 'text' : 'password'} />
                   <InputRightElement width="4.5rem">
                     <Button h="1.75rem" size="sm" onClick={handleShowClick}>
                       {showPassword ? 'Hide' : 'Show'}
