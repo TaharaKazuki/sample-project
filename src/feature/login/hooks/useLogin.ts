@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SignUpSchema } from '../schema';
 import { ISignUpFormValue } from '../types';
 
-import { useAuth } from '@/feature/auth/hooks';
+import { useAuth } from '@/feature/auth/hooks/useAuth';
 
 export const useLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
