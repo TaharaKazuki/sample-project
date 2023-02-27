@@ -1,10 +1,8 @@
 import type { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query';
-import {
-  useMutation as useTanMutation,
-  useQuery as useTanQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useMutation as useTanMutation, useQuery as useTanQuery } from '@tanstack/react-query';
 import { getCookie } from 'typescript-cookie';
+
+import { queryClient } from './queryClient';
 
 export const useQuery = <
   TQueryKey extends [string, (Record<string, unknown> | string)?],
@@ -52,8 +50,6 @@ export const useOptimisticMutation = <TVariables, TData, TContext>(
     'onMutate' | 'onError' | 'onSettled'
   >
 ) => {
-  const queryClient = useQueryClient();
-
   return useTanMutation(
     async (params: TVariables) => {
       const authToken = getCookie('authToken');
