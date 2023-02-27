@@ -1,4 +1,4 @@
-import { headerPlugin, Zodios } from '@zodios/core';
+import { Zodios } from '@zodios/core';
 import { pluginFetch } from '@zodios/plugins';
 
 import { API_ENDPOINT } from '../const/url';
@@ -6,7 +6,7 @@ import { authApiSchema } from '../schema/authSchema';
 import { userApiSchema } from '../schema/userSchema';
 
 import { mswPlugin } from './msw/plugins';
-import { pluginApiKey } from './plugins';
+import { headerPlugin, pluginApiKey } from './plugins';
 
 export const apiClient = () => {
   const api = new Zodios(API_ENDPOINT, [...authApiSchema, ...userApiSchema]);

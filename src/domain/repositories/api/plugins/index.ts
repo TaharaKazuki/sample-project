@@ -17,3 +17,17 @@ export const pluginApiKey = (provider: ApiKeyPluginConfig): ZodiosPlugin => {
     },
   };
 };
+
+export const headerPlugin = (key: string, value: string): ZodiosPlugin => {
+  return {
+    request: async (_, config) => {
+      return {
+        ...config,
+        headers: {
+          ...config.headers,
+          [key]: value,
+        },
+      };
+    },
+  };
+};

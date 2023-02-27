@@ -5,12 +5,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SignUpSchema } from '../schema';
 import { ISignUpFormValue } from '../types';
 
-// import { useAuth } from '@/feature/auth/hooks';
+import { useAuth } from '@/feature/auth/hooks';
 
 export const useLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
-  // const { login } = useAuth();
+  const { login } = useAuth();
 
   const {
     register,
@@ -24,9 +24,9 @@ export const useLogin = () => {
   return {
     register,
     handleSubmit,
+    login,
     setError,
     errors,
-    // login,
     isSubmitting,
     showPassword,
     handleShowClick,

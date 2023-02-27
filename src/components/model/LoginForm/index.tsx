@@ -1,5 +1,4 @@
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { FaLock, FaUserAlt } from 'react-icons/fa';
 import {
   Avatar,
@@ -15,10 +14,8 @@ import {
   InputRightElement,
   Stack,
 } from '@chakra-ui/react';
-import { zodResolver } from '@hookform/resolvers/zod';
 
-import { SignUpSchema } from '@/feature/login/schema';
-import { ISignUpFormValue } from '@/feature/login/types';
+import { useLogin } from '@/feature/login/hooks/useLogin';
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
@@ -27,18 +24,9 @@ export type LoginApi = {
   setErrors: (errors: Record<string, string>) => void;
 };
 
-// type Props = {};
-
 export const LoginForm = forwardRef<LoginApi>((_, ref) => {
-  const {
-    // register,
-    // handleSubmit,
-    setError,
-    // formState: { errors, isSubmitting },
-  } = useForm<ISignUpFormValue>({ resolver: zodResolver(SignUpSchema) });
-
-  const [showPassword, setShowPassword] = useState(false);
-  const handleShowClick = () => setShowPassword(!showPassword);
+  const { register, errors, showPassword, handleShowClick, setError, handleSubmit, login } =
+    useLogin();
 
   const setErrorRef = useRef(setError);
   setErrorRef.current = setError;
@@ -68,28 +56,30 @@ export const LoginForm = forwardRef<LoginApi>((_, ref) => {
         <Avatar bg="teal.500" />
         <Heading color="teal.400">ようこそ</Heading>
         <Box minW={{ base: '90%', md: '468px' }}>
-          <form>
+          <form onSubmit={handleSubmit((param) => login(param))}>
             <Stack spacing={4} p="1rem" backgroundColor="whiteAlpha.900" boxShadow="md">
               <FormControl>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
                     <CFaUserAlt color="gray.300" />
                   </InputLeftElement>
-                  <Input type="text" placeholder="user id" />
+                  <Input type="text" placeholder="name" {...register('name')} />
                 </InputGroup>
+                {errors ? <div>{errors.name?.message}</div> : null}
               </FormControl>
               <FormControl>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none" color="gray.300">
                     <CFaLock color="gray.300" />
                   </InputLeftElement>
-                  <Input type={showPassword ? 'text' : 'password'} />
+                  <Input type={showPassword ? 'text' : 'password'} {...register('password')} />
                   <InputRightElement width="4.5rem">
                     <Button h="1.75rem" size="sm" onClick={handleShowClick}>
                       {showPassword ? 'Hide' : 'Show'}
                     </Button>
                   </InputRightElement>
                 </InputGroup>
+                {errors ? <div>{errors.password?.message}</div> : null}
               </FormControl>
               <Button
                 borderRadius={0}
