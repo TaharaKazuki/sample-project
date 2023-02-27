@@ -8,8 +8,14 @@ type IAuthParam = {
 };
 
 export const authRepositories = {
-  authenticate: async (requestValue: IAuthParam): Promise<{ token: token }> => {
-    const response = await apiClient().postAuth(requestValue);
+  authenticate: async (
+    requestValue: IAuthParam
+  ): Promise<void | {
+    token: token;
+  }> => {
+    const response = await apiClient()
+      .postAuth(requestValue)
+      .catch((e) => console.info(e));
     return response;
   },
 };

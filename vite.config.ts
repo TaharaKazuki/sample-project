@@ -4,6 +4,6 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  server: { open: true, port: 8000 },
+  server: { open: true, port: 8000, cors: true },
   plugins: [react(), tsconfigPaths()],
 });

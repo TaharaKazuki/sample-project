@@ -11,8 +11,14 @@ import { headerPlugin, pluginApiKey } from './plugins';
 export const apiClient = () => {
   const api = new Zodios(API_ENDPOINT, [...authApiSchema, ...userApiSchema]);
 
-  api.use(pluginFetch());
+  api.use(
+    pluginFetch({
+      mode: 'cors',
+      keepalive: true,
+    })
+  );
   api.use(headerPlugin('Content-Type', 'application/json'));
+  api.use(headerPlugin('Access-Control-Allow-Origin', '*'));
 
   api.use(
     pluginApiKey({

@@ -65,7 +65,7 @@ export const LoginForm = forwardRef<LoginApi>((_, ref) => {
         <Heading color="teal.400">ようこそ</Heading>
         <Box minW={{ base: '90%', md: '468px' }}>
           <form
-            onSubmit={handleSubmit((param, e) => {
+            onSubmit={handleSubmit((param) => {
               login(param);
             })}
           >
