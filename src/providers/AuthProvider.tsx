@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { createContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UseMutateFunction } from '@tanstack/react-query';
 import { getCookie, removeCookie, setCookie } from 'typescript-cookie';
 
@@ -22,7 +23,7 @@ type IAuthContext = {
   login: UseMutateFunction<void | IToken, unknown, ILoginParams, IToken>;
   logout: () => void;
   data: User | undefined;
-  // isLoading: boolean;
+  isLoading: boolean;
 };
 
 export const AuthContext = createContext<IAuthContext>({
@@ -30,7 +31,7 @@ export const AuthContext = createContext<IAuthContext>({
   login: () => Promise.resolve(undefined),
   logout: () => undefined,
   data: undefined,
-  // isLoading: false,
+  isLoading: false,
 });
 
 type AuthProviderProps = {
@@ -39,8 +40,9 @@ type AuthProviderProps = {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [token, setToken] = useState<string | undefined | null>(getCookie('authToken'));
+  const navigate = useNavigate();
 
-  const { mutate: login } = useMutation<ILoginParams, IToken, IToken>(
+  const { mutate: login, isLoading } = useMutation<ILoginParams, IToken, IToken>(
     [`${AUTH_KEY}`],
     async (_, params) => authRepositories.authenticate(params),
     {
@@ -56,6 +58,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const { data } = useQuery([`${USER_KEY}`], async (token) => userRepositories.getUser(token), {
     enabled: !!getCookie('authToken'),
+    onSuccess: async (data) => {
+      if (data && data.loginNumber > 0) {
+        return navigate('/', { replace: true });
+      } else {
+        return navigate('/homeDummy', { replace: true });
+      }
+    },
   });
 
   const logout = () => {
@@ -65,6 +74,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   return (
-    <AuthContext.Provider value={{ token, logout, login, data }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ token, logout, login, data, isLoading }}>
+      {children}
+    </AuthContext.Provider>
   );
 };

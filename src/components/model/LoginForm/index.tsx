@@ -25,8 +25,16 @@ export type LoginApi = {
 };
 
 export const LoginForm = forwardRef<LoginApi>((_, ref) => {
-  const { register, errors, showPassword, handleShowClick, setError, handleSubmit, login } =
-    useLogin();
+  const {
+    register,
+    errors,
+    showPassword,
+    handleShowClick,
+    setError,
+    handleSubmit,
+    login,
+    isLoading,
+  } = useLogin();
 
   const setErrorRef = useRef(setError);
   setErrorRef.current = setError;
@@ -88,7 +96,7 @@ export const LoginForm = forwardRef<LoginApi>((_, ref) => {
                 colorScheme="teal"
                 width="full"
               >
-                ログイン
+                {isLoading ? '送信中...' : 'ログイン'}
               </Button>
             </Stack>
           </form>

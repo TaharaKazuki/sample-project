@@ -5,7 +5,7 @@ export const userApis = [
     return res(
       ctx.delay(500),
       ctx.status(200),
-      ctx.json({ id: '1', name: 'sample', loginNumber: 2 })
+      ctx.json({ id: '1', name: 'sample', loginNumber: 0 })
     );
   }),
 ];

@@ -15,12 +15,12 @@ type AppProviderProps = {
 export const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <ChakraProvider>
-          <Router>{children}</Router>
-          <ReactQueryDevtools initialIsOpen={true} />
-        </ChakraProvider>
-      </AuthProvider>
+      <ChakraProvider>
+        <Router>
+          <AuthProvider>{children}</AuthProvider>
+        </Router>
+        <ReactQueryDevtools initialIsOpen={true} />
+      </ChakraProvider>
     </QueryClientProvider>
   );
 };

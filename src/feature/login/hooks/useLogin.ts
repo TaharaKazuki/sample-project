@@ -10,7 +10,7 @@ import { useAuth } from '@/feature/auth/hooks';
 export const useLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
-  const { login } = useAuth();
+  const { login, isLoading } = useAuth();
 
   const {
     register,
@@ -19,14 +19,13 @@ export const useLogin = () => {
     formState: { errors, isSubmitting },
   } = useForm<ISignUpFormValue>({ resolver: zodResolver(SignUpSchema) });
 
-  // login({ name: 'sample', password: '1111' });
-
   return {
     register,
     handleSubmit,
     login,
     setError,
     errors,
+    isLoading,
     isSubmitting,
     showPassword,
     handleShowClick,
