@@ -1,1 +1,1 @@
-export const API_ENDPOINT = 'https://sample.com';
+export const API_ENDPOINT = 'http://localhost:8000';
