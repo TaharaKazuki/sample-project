@@ -1,3 +1,5 @@
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { FaLock, FaUserAlt } from 'react-icons/fa';
 import {
   Avatar,
@@ -13,14 +15,45 @@ import {
   InputRightElement,
   Stack,
 } from '@chakra-ui/react';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useLogin } from '@/feature/login/hooks/useLogin';
+import { SignUpSchema } from '@/feature/login/schema';
+import { ISignUpFormValue } from '@/feature/login/types';
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 
-export const LoginForm = () => {
-  const { showPassword, handleShowClick } = useLogin();
+export type LoginApi = {
+  setErrors: (errors: Record<string, string>) => void;
+};
+
+// type Props = {};
+
+export const LoginForm = forwardRef<LoginApi>((_, ref) => {
+  const {
+    // register,
+    // handleSubmit,
+    setError,
+    // formState: { errors, isSubmitting },
+  } = useForm<ISignUpFormValue>({ resolver: zodResolver(SignUpSchema) });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const handleShowClick = () => setShowPassword(!showPassword);
+
+  const setErrorRef = useRef(setError);
+  setErrorRef.current = setError;
+
+  useImperativeHandle(ref, () => {
+    return {
+      setErrors: (errors: Record<string, string>) => {
+        Object.entries(errors).forEach(([key, value]) => {
+          setErrorRef.current(key as 'password' | 'name', {
+            message: value,
+          });
+        });
+      },
+    };
+  });
 
   return (
     <Flex
@@ -42,7 +75,7 @@ export const LoginForm = () => {
                   <InputLeftElement pointerEvents="none">
                     <CFaUserAlt color="gray.300" />
                   </InputLeftElement>
-                  <Input type="email" placeholder="email address" />
+                  <Input type="text" placeholder="user id" />
                 </InputGroup>
               </FormControl>
               <FormControl>
@@ -73,4 +106,6 @@ export const LoginForm = () => {
       </Stack>
     </Flex>
   );
-};
+});
+
+LoginForm.displayName = 'LoginForm';
