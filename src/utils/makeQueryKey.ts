@@ -1,4 +1,4 @@
-export type PrefixAddedKeys<Prefix extends string, Keys extends Record<string, unknown>> = {
+type PrefixAddedKeys<Prefix extends string, Keys extends Record<string, unknown>> = {
   [Key in keyof Keys]: Key extends string
     ? Keys[Key] extends string
       ? `${Prefix}${Capitalize<Key>}`
@@ -8,7 +8,7 @@ export type PrefixAddedKeys<Prefix extends string, Keys extends Record<string, u
     : never;
 };
 
-export const addKeyPrefix = <Prefix extends string, Keys extends Record<string, unknown>>(
+const addKeyPrefix = <Prefix extends string, Keys extends Record<string, unknown>>(
   prefix: Prefix,
   keys: Keys
 ): PrefixAddedKeys<Prefix, Keys> => {
@@ -23,3 +23,8 @@ export const addKeyPrefix = <Prefix extends string, Keys extends Record<string, 
     })
   );
 };
+
+export const makeQueryKey = addKeyPrefix('', {
+  auth: 'auth',
+  user: 'user',
+});
