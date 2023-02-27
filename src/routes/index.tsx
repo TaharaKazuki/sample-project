@@ -1,18 +1,9 @@
-import type { RouteObject } from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
 
-import { NavBar } from '@/components/layout/NaveBar';
-import { Home } from '@/components/pages/Home';
-import { Login } from '@/components/pages/Login';
-import { NotFound } from '@/components/pages/NotFound';
+import { routes as publicRoutes } from './public';
 
-export const routes: RouteObject[] = [
-  {
-    path: '/',
-    element: <NavBar />,
-    children: [
-      { index: true, element: <Home /> },
-      { path: '/login', element: <Login /> },
-      { path: '*', element: <NotFound /> },
-    ],
-  },
-];
+export const AppRoutes = () => {
+  const element = useRoutes(publicRoutes);
+
+  return <>{element}</>;
+};
