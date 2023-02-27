@@ -3,12 +3,13 @@ import { pluginFetch } from '@zodios/plugins';
 
 import { API_ENDPOINT } from '../const/url';
 import { authApiSchema } from '../schema/authSchema';
+import { userApiSchema } from '../schema/userSchema';
 
 import { pluginApiKey } from './lib/apiKeyPlugin';
 import { mswPlugin } from './msw/lib/mswPlugin';
 
 export const apiClient = () => {
-  const api = new Zodios(API_ENDPOINT, [...authApiSchema]);
+  const api = new Zodios(API_ENDPOINT, [...authApiSchema, ...userApiSchema]);
 
   api.use(pluginFetch());
   api.use(headerPlugin('Content-Type', 'application/json'));
