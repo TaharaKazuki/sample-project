@@ -5,7 +5,7 @@ import { Home } from '@/components/pages/Home';
 import { Login } from '@/components/pages/Login';
 import { NotFound } from '@/components/pages/NotFound';
 
-export const routes: RouteObject[] = [
+export const protectedRoutes: RouteObject[] = [
   {
     path: '/',
     element: <NavBar />,

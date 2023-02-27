@@ -47,10 +47,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     async (_, params) => authRepositories.authenticate(params),
     {
       onSuccess: async (data) => {
-        if (data) {
-          setCookie('authToken', data.token, { path: '/' });
-          await queryClient.fetchQuery([`${USER_KEY}`]).then(() => setToken(data.token));
-        }
+        setCookie('authToken', data?.token, { path: '/' });
+        await queryClient.fetchQuery([`${USER_KEY}`]);
+      },
+      onSettled: async (data) => {
+        setToken(data?.token);
       },
     }
   );

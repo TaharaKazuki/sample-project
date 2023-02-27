@@ -4,7 +4,7 @@ import { NavBar } from '@/components/layout/NaveBar';
 import { Login } from '@/components/pages/Login';
 import { NotFound } from '@/components/pages/NotFound';
 
-export const routes: RouteObject[] = [
+export const publicRoutes: RouteObject[] = [
   {
     path: '/',
     element: <NavBar />,

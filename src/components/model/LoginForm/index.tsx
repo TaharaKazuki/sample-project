@@ -64,7 +64,11 @@ export const LoginForm = forwardRef<LoginApi>((_, ref) => {
         <Avatar bg="teal.500" />
         <Heading color="teal.400">ようこそ</Heading>
         <Box minW={{ base: '90%', md: '468px' }}>
-          <form onSubmit={handleSubmit((param) => login(param))}>
+          <form
+            onSubmit={handleSubmit((param, e) => {
+              login(param);
+            })}
+          >
             <Stack spacing={4} p="1rem" backgroundColor="whiteAlpha.900" boxShadow="md">
               <FormControl>
                 <InputGroup>
