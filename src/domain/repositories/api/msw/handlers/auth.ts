@@ -1,4 +1,4 @@
-import { restPost } from '../lib/typeDefinitionWrapper';
+import { restPost } from '../lib/typeDefinitionMsw';
 
 export const authApis = [
   restPost('/auth/me', async (req, res, ctx) => {

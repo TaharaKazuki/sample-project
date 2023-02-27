@@ -1,4 +1,4 @@
-import { restGet } from '../lib/typeDefinitionWrapper';
+import { restGet } from '../lib/typeDefinitionMsw';
 
 export const userApis = [
   restGet('/user', async (req, res, ctx) => {
