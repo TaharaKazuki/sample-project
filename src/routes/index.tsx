@@ -1,14 +1,16 @@
 import { useRoutes } from 'react-router-dom';
 
 import { routes as protectedRoutes } from './protected';
-import { routes as publicRoutes } from './public';
 
 import { useAuth } from '@/feature/auth/hooks/useAuth';
 
 export const AppRoutes = () => {
-  const { token } = useAuth();
+  const { token, data } = useAuth();
 
-  const routes = token ? protectedRoutes : publicRoutes;
+  console.info('token', token);
+  console.info('data', data);
+
+  const routes = protectedRoutes;
 
   const element = useRoutes(routes);
 

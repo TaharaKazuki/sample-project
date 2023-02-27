@@ -27,7 +27,7 @@ type IAuthContext = {
 };
 
 export const AuthContext = createContext<IAuthContext>({
-  token: null,
+  token: undefined,
   login: () => Promise.resolve(undefined),
   logout: () => undefined,
   data: undefined,
@@ -39,7 +39,7 @@ type AuthProviderProps = {
 };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [token, setToken] = useState<string | undefined | null>(getCookie('authToken'));
+  const [token, setToken] = useState<string | undefined | null>(() => getCookie('authToken'));
   const navigate = useNavigate();
 
   const { mutate: login, isLoading } = useMutation<ILoginParams, IToken, IToken>(
@@ -49,8 +49,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       onSuccess: async (data) => {
         if (data) {
           setCookie('authToken', data.token, { path: '/' });
-          setToken(data.token);
-          await queryClient.fetchQuery([`${USER_KEY}`]);
+          await queryClient.fetchQuery([`${USER_KEY}`]).then(() => setToken(data.token));
         }
       },
     }
@@ -60,9 +59,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     enabled: !!getCookie('authToken'),
     onSuccess: async (data) => {
       if (data && data.loginNumber > 0) {
-        return navigate('/', { replace: true });
+        navigate('/', { replace: true });
       } else {
-        return navigate('/homeDummy', { replace: true });
+        navigate('/homeDummy', { replace: true });
       }
     },
   });
@@ -70,7 +69,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = () => {
     setToken(null);
     removeCookie('authToken');
-    // cacheを削除する
   };
 
   return (
