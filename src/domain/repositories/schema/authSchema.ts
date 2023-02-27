@@ -26,7 +26,8 @@ export const authApiSchema = makeApi([
   {
     method: 'post',
     path: '/auth/me',
-    alias: 'Authorization',
+    alias: 'postAuth',
+    description: 'Authorization',
     parameters: [
       {
         name: 'body',
