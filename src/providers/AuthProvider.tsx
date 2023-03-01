@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   );
 
   const { data } = useQuery([`${USER_KEY}`], async (token) => userRepositories.getUser(token), {
-    enabled: !!getCookie('authToken'),
+    enabled: getCookie('authToken') ? true : false,
     onSuccess: async (data) => {
       if (data && data.loginNumber > 0) {
         navigate('/', { replace: true });
